@@ -2,15 +2,17 @@ import sqlite3
 import sys
 
 from PyQt6 import uic
+from addEditCoffeeForm import Ui_MainWindow2
+from main2 import Ui_MainWindow
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem
 
 
-class Coffee_viewing(QMainWindow):
+class Coffee_viewing(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
-        self.connection = sqlite3.connect("coffee.sqlite")
+        self.setupUi(self)
+        self.connection = sqlite3.connect("../data/coffee.sqlite")
         self.make_table()
         self.pushButton.clicked.connect(self.open_2form)
 
@@ -43,11 +45,11 @@ class Coffee_viewing(QMainWindow):
         self.f.show()
 
 
-class AddEditCoffeeForm(QMainWindow):
+class AddEditCoffeeForm(QMainWindow, Ui_MainWindow2):
     def __init__(self, parent=None):
         super().__init__(parent)
-        uic.loadUi('addEditCoffeeForm.ui', self)
-        self.con = sqlite3.connect("coffee.sqlite")
+        self.setupUi(self)
+        self.con = sqlite3.connect("../data/coffee.sqlite")
         self.pushButton.clicked.connect(self.srav)
         res = self.con.cursor().execute('SELECT * FROM degree_of_roasting').fetchall()
         self.params1 = {}
